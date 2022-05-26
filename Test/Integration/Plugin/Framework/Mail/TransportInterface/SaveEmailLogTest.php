@@ -6,9 +6,14 @@ namespace MageSuite\EmailLogger\Test\Integration\Plugin\Framework\Mail\Transport
 class SaveEmailLogTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \Magento\Framework\Mail\Template\TransportBuilder
+     * @var \Magento\TestFramework\Mail\Template\TransportBuilderMock
      */
     protected $transportBuilder;
+
+    /**
+     * @var \MageSuite\EmailLogger\Plugin\Framework\Mail\TransportInterface\SaveEmailLog
+     */
+    protected $saveEmailLogPlugin;
 
     /**
      * @var \MageSuite\EmailLogger\Api\EmailRepositoryInterface
@@ -23,7 +28,8 @@ class SaveEmailLogTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
-        $this->transportBuilder = $objectManager->get(\Magento\Framework\Mail\Template\TransportBuilder::class);
+        $this->transportBuilder = $objectManager->get(\Magento\TestFramework\Mail\Template\TransportBuilderMock::class);
+        $this->saveEmailLogPlugin = $objectManager->get(\MageSuite\EmailLogger\Plugin\Framework\Mail\TransportInterface\SaveEmailLog::class);
         $this->emailRepository = $objectManager->get(\MageSuite\EmailLogger\Api\EmailRepositoryInterface::class);
         $this->searchCriteriaBuilder = $objectManager->get(\Magento\Framework\Api\SearchCriteriaBuilder::class);
     }
@@ -45,6 +51,8 @@ class SaveEmailLogTest extends \PHPUnit\Framework\TestCase
             ->addTo('to@example.com', 'Example To')
             ->getTransport();
         $transport->sendMessage();
+        $this->saveEmailLogPlugin->afterSendMessage($transport, null);
+
         $searchCriteria = $this->searchCriteriaBuilder->create();
         $items = $this->emailRepository->getList($searchCriteria)->getItems();
         $email = array_pop($items);
