@@ -1,0 +1,15 @@
+{
+    "email_log": {
+        "column": {
+            "email_id": true,
+            "recipient": true,
+            "sender": true,
+            "subject": true,
+            "body": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
