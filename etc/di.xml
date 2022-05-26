@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="MageSuite\EmailLogger\Api\Data\EmailInterface"
+                type="MageSuite\EmailLogger\Model\Email" />
+
+    <preference for="MageSuite\EmailLogger\Api\EmailRepositoryInterface"
+                type="MageSuite\EmailLogger\Model\EmailRepository" />
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="emaillogger_listing_data_source" xsi:type="string">MageSuite\EmailLogger\Model\ResourceModel\Email\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="MageSuite\EmailLogger\Model\ResourceModel\Email\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">email_log</argument>
+            <argument name="resourceModel" xsi:type="string">MageSuite\EmailLogger\Model\ResourceModel\Email</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Framework\Mail\TransportInterface">
+        <plugin name="save_email_log" type="MageSuite\EmailLogger\Plugin\Framework\Mail\TransportInterface\SaveEmailLog" sortOrder="20" />
+    </type>
+</config>

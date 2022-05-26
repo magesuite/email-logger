@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="MageSuite_EmailLogger::email_menu"
+            title="Email Logs"
+            module="MageSuite_EmailLogger"
+            sortOrder="60"
+            parent="Magento_Backend::system_convert"
+            action="emaillogger/email/index"
+            resource="MageSuite_EmailLogger::email"/>
+    </menu>
+</config>

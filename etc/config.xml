@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <email_logger>
+            <general>
+                <enabled>0</enabled>
+                <retention_period_in_days>7</retention_period_in_days>
+            </general>
+        </email_logger>
+    </default>
+</config>
