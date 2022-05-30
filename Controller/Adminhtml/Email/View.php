@@ -37,7 +37,7 @@ class View extends \Magento\Backend\App\Action implements \Magento\Framework\App
         }
 
         $resultRaw = $this->resultRawFactory->create();
-        $resultRaw->setContents($model->getContent());
+        $resultRaw->setContents($model->getBody());
 
         return $resultRaw;
     }

@@ -3,7 +3,7 @@
     <menu>
         <add
             id="MageSuite_EmailLogger::email_menu"
-            title="Email Logs"
+            title="Email Logger"
             module="MageSuite_EmailLogger"
             sortOrder="60"
             parent="Magento_Backend::system_convert"
