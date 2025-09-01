@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\EmailLogger\Plugin\Framework\Mail\TransportInterface;
@@ -37,7 +38,11 @@ class SaveEmailLog
             if ($body instanceof \Symfony\Component\Mime\Part\TextPart) {
                 $body = $body->getBody();
             } else {
-                $body = $body->getParts()[0]->getBody();
+                if ($body->getParts()[0] instanceof \Symfony\Component\Mime\Part\TextPart) {
+                    $body = $body->getParts()[0]->getBody();
+                } else {
+                    $body = $body->getParts()[0]->getRawContent();
+                }
             }
 
             $email = $this->emailFactory->create()
