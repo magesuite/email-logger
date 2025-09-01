@@ -34,11 +34,10 @@ class SaveEmailLog
             $message = $subject->getMessage();
             $body = $message->getBody();
 
-            // Magento 2.4.8 and later
-            if (method_exists($body, 'bodyToString')) {
-                $body = $body->bodyToString();
+            if ($body instanceof \Symfony\Component\Mime\Part\TextPart) {
+                $body = $body->getBody();
             } else {
-                $body = $body->getParts()[0]->getRawContent();
+                $body = $body->getParts()[0]->getBody();
             }
 
             $email = $this->emailFactory->create()
