@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\EmailLogger\Plugin\Framework\Mail\TransportInterface;
@@ -22,6 +23,9 @@ class SaveEmailLog
         $this->logger = $logger;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     public function afterSendMessage(
         \Magento\Framework\Mail\TransportInterface $subject,
         $result
@@ -34,11 +38,14 @@ class SaveEmailLog
             $message = $subject->getMessage();
             $body = $message->getBody();
 
-            // Magento 2.4.8 and later
-            if (method_exists($body, 'bodyToString')) {
-                $body = $body->bodyToString();
+            if ($body instanceof \Symfony\Component\Mime\Part\TextPart) {
+                $body = $body->getBody();
             } else {
-                $body = $body->getParts()[0]->getRawContent();
+                if ($body->getParts()[0] instanceof \Symfony\Component\Mime\Part\TextPart) {
+                    $body = $body->getParts()[0]->getBody();
+                } else {
+                    $body = $body->getParts()[0]->getRawContent();
+                }
             }
 
             $email = $this->emailFactory->create()
