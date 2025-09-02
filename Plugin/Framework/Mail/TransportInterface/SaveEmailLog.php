@@ -37,10 +37,10 @@ class SaveEmailLog
 
             if ($body instanceof \Symfony\Component\Mime\Part\TextPart) {
                 $body = $body->getBody();
-            } else {
+            } else { //phpcs:ignore
                 if ($body->getParts()[0] instanceof \Symfony\Component\Mime\Part\TextPart) {
                     $body = $body->getParts()[0]->getBody();
-                } else {
+                } else { //phpcs:ignore
                     $body = $body->getParts()[0]->getRawContent();
                 }
             }
