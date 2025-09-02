@@ -23,6 +23,9 @@ class SaveEmailLog
         $this->logger = $logger;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
     public function afterSendMessage(
         \Magento\Framework\Mail\TransportInterface $subject,
         $result
@@ -37,10 +40,10 @@ class SaveEmailLog
 
             if ($body instanceof \Symfony\Component\Mime\Part\TextPart) {
                 $body = $body->getBody();
-            } else { //phpcs:ignore
+            } else {
                 if ($body->getParts()[0] instanceof \Symfony\Component\Mime\Part\TextPart) {
                     $body = $body->getParts()[0]->getBody();
-                } else { //phpcs:ignore
+                } else {
                     $body = $body->getParts()[0]->getRawContent();
                 }
             }
